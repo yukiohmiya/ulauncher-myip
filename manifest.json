@@ -1,9 +1,8 @@
 {
-	"manifest_version": "1",
-	"api_version": "1",
+	"required_api_version": "^2.0.0",
 	"name": "MyIP",
-	"description": "Get your current external ip address.",
-	"developer_name": "Rolf Koenders",
+	"description": "Get your current ip address.",
+	"developer_name": "Yuki Ohmiya",
 	"icon": "images/icon.png",
 	"options": {
 		"query_debounce": 0.1

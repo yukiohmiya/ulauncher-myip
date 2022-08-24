@@ -1,4 +1,6 @@
-import urllib.request, urllib.error, urllib.parse
+import urllib.request
+import urllib.error
+import urllib.parse
 import logging
 from ulauncher.api.client.Extension import Extension
 from ulauncher.api.client.EventListener import EventListener
@@ -9,27 +11,29 @@ from ulauncher.api.shared.action.CopyToClipboardAction import CopyToClipboardAct
 
 logger = logging.getLogger(__name__)
 
+
 class MyIpExtension(Extension):
 
-	def __init__(self):
-		super(MyIpExtension, self).__init__()
-		self.subscribe(KeywordQueryEvent, KeywordQueryEventListener())
+    def __init__(self):
+        super(MyIpExtension, self).__init__()
+        self.subscribe(KeywordQueryEvent, KeywordQueryEventListener())
 
 
 class KeywordQueryEventListener(EventListener):
 
-	def on_event(self, event, extension):
-        ip = urllib.request.urlopen("http://icanhazip.com/").read()
-		logger.debug('Got external ip: %s', ip)
+    def on_event(self, event, extension):
+        ip = urllib.request.urlopen("https://api.ipify.org/").read().decode()
+        logger.debug('Got external ip: %s', ip)
 
-		items = []
+        items = []
         items.append(ExtensionResultItem(
             icon='images/icon.png',
-            name='External IP: %s' % ip.decode(),
+            name='External IP: %s' % ip,
             description='Press \'enter\' to copy to clipboard.',
             on_enter=CopyToClipboardAction(ip)))
 
-		return RenderResultListAction(items)
+        return RenderResultListAction(items)
+
 
 if __name__ == '__main__':
-	MyIpExtension().run()
+    MyIpExtension().run()
